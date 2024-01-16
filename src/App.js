@@ -105,7 +105,6 @@ function App() {
           <Route path="/findpeople" element={<FindPeople />} />
           <Route path="/my-info" element={<MyInfo />} />
           <Route path="/transaction" element={<TransactionTabs />} />
-<<<<<<< Updated upstream
           <Route path="/admin" element={<Admin/>} />
           <Route path="/privacyPolicy" element={<PrivacyPolicy/>} />
           <Route path="/termsAndConditions" element={<TermsAndConditions/>} />
@@ -113,9 +112,6 @@ function App() {
           <Route path="/helpAndSupport" element={<HelpAndSupport/>} />
           <Route path="/more" element={<More/>} />
           <Route path="/donate" element={<Donate/>} />
-=======
-          <Route path="/admin" element={<Admin />} />
->>>>>>> Stashed changes
         </Routes>
       </BrowserRouter>
       {confetti && (
@@ -126,7 +122,7 @@ function App() {
         />
       )}
       <div className="whatsappwidget">
-        <WhatsAppWidget phoneNumber="9467765170" />
+        <WhatsAppWidget phoneNumber="7259293140" />
       </div>
     </>
   );

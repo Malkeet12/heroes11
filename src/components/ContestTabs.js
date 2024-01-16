@@ -341,7 +341,7 @@ export default function ContestTabs({ contest, leaderboard, match_details }) {
                                     <span>
                                       {index < contest?.prizeDetails.length &&
                                         "₹" +
-                                        contest?.prizeDetails[index].prize}
+                                          contest?.prizeDetails[index].prize}
                                     </span>
                                   </>
                                 ) : (

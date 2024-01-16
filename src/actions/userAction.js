@@ -58,12 +58,15 @@ export const register = (myform) => async (dispatch) => {
 
 export const login = (myform) => async (dispatch) => {
   try {
+    console.log(myform, "huccha");
     dispatch({ type: LOGIN_REQUEST });
-    const { data } = await axios.post(`${URL}/user/login`, myform);
-    localStorage.setItem("token", data.accessToken);
+    const { data } = await axios.post(`${URL}/auth/login`, {
+      myform,
+    });
+    localStorage.setItem("token", data.token);
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
   } catch (error) {
-    console.log(error.response, "msd");
+    console.log(error.response, "asdfgh");
     dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
   }
 };
@@ -112,9 +115,9 @@ export const loadUser = () => async (dispatch) => {
     const servertoken =
       localStorage.getItem("token") && localStorage.getItem("token");
     dispatch({ type: LOAD_USER_REQUEST });
-    const { data } = await API.get(`/user/details`); //{ data: { message: "success", id: "1" } }
-    if (data.resultCode === "00089") {
-      dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
+    const { data } = await API.get(`/auth/loaduser`);
+    if (data.message) {
+      dispatch({ type: LOAD_USER_SUCCESS, payload: data.message });
     }
   } catch (error) {
     console.log(error);

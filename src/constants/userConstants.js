@@ -56,8 +56,8 @@ function geturl() {
   const current = process.env.REACT_APP_API;
   if (current == "local") {
     //return "http://35.78.205.163";
-    //return "https://backendforpuand-dream11.onrender.com";
-    return 'http://localhost:9000/api';
+    return "https://backendforpuand-dream11.onrender.com";
+    return 'http://localhost:9000';
   }
   else {
     return "https://backendforpuand-dream11.onrender.com";

@@ -146,7 +146,7 @@ export function Match({ u, live }) {
   return (
     <div
       className="matchcontainer"
-      onClick={() => navigate(`/contests/${u.match_id}`)}
+      onClick={() => navigate(`/contests/${u.id}`)}
     >
       <Top>
         <h5
@@ -161,16 +161,25 @@ export function Match({ u, live }) {
           <span style={{
             marginRight: "5px", textOverflow: "ellipsis", whiteSpace: "nowrap",
             width: "180px", overflow: "hidden"
-          }}>{u.tournament_name ? u.tournament_name : "Individual Match"}</span>
+          }}>{u.match_title}</span>
         </h5>
-
+        <h5
+          style={{
+            color: "rgb(31, 169, 81)",
+            fontFamily: "Montserrat",
+            textOverflow: "ellipsis", whiteSpace: "nowrap",
+            width: "100px"
+          }}
+        >
+          {live || u.lineups}
+        </h5>
+        <NotificationAddOutlinedIcon style={{ fontSize: "20px" }} />
       </Top>
       <div className="match">
         <div className="matchcenter">
           <div className="matchlefts">
-            <h5>{u.team_a}</h5>
-            {/* <img src={u.teamAwayFlagUrl} alt="" width="40" /> */}
-            {/* <h5>{u.away.code}</h5> */}
+            <img src={u.teamAwayFlagUrl} alt="" width="40" />
+            <h5>{u.away.code}</h5>
           </div>
           {live ? (
             <div
@@ -185,12 +194,12 @@ export function Match({ u, live }) {
               <LinearProgress color="success" />
             </div>
           ) : (
-            <h5 className={u.status == "past" ? "completed" : "time"}>
-              {u.status != "past" ? (
-                sameDayorNot(new Date(), new Date(u.match_start_time)) ||
-                  isTommorrow(new Date(), new Date(u.match_start_time)) ? (
+            <h5 className={u.result == "Yes" ? "completed" : "time"}>
+              {!(u.result == "Yes") ? (
+                sameDayorNot(new Date(), new Date(u.date)) ||
+                  isTommorrow(new Date(), new Date(u.date)) ? (
                   <div>
-                    <p>{hoursRemaining(u.match_start_time, "k", date)}</p>
+                    <p>{hoursRemaining(u.date, "k", date)}</p>
                     <p
                       style={{
                         color: "#5e5b5b",
@@ -199,8 +208,8 @@ export function Match({ u, live }) {
                         marginTop: "2px",
                       }}
                     >
-                      {getDisplayDate(u.match_start_time, "i", date) &&
-                        getDisplayDate(u.match_start_time, "i", date)}
+                      {getDisplayDate(u.date, "i", date) &&
+                        getDisplayDate(u.date, "i", date)}
                     </p>
                   </div>
                 ) : (
@@ -210,7 +219,7 @@ export function Match({ u, live }) {
                       textTransform: "auto",
                     }}
                   >
-                    {getDisplayDate(u.match_start_time, "i") && getDisplayDate(u.match_start_time, "i")}
+                    {getDisplayDate(u.date, "i") && getDisplayDate(u.date, "i")}
                   </p>
                 )
               ) : (
@@ -219,8 +228,8 @@ export function Match({ u, live }) {
             </h5>
           )}
           <div className="matchrights">
-            <h5> {u.team_b}</h5>
-            {/* <img src={u.teamHomeFlagUrl} alt="" width="40" /> */}
+            <h5> {u.home.code}</h5>
+            <img src={u.teamHomeFlagUrl} alt="" width="40" />
           </div>
         </div>
       </div>

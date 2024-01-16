@@ -39,10 +39,10 @@ export function Register() {
   const [open, setOpen] = useState(false);
   const [otp, setOtp] = useState();
   const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .required("Name is required")
-      .min(6, "Name must be at least 6 characters")
-      .max(20, "Name must not exceed 20 characters"),
+    username: Yup.string()
+      .required("Username is required")
+      .min(6, "Username must be at least 6 characters")
+      .max(20, "Username must not exceed 20 characters"),
     email: Yup.string().required("Email is required").email("Email is invalid"),
     password: Yup.string()
       .required("Password is required")
@@ -79,34 +79,34 @@ export function Register() {
     console.log(JSON.stringify(formData, null, 2));
     //e.preventDefault();
     setEmail(formData.email);
-    const data = await axios.post(`${URL}/user`, {
+    const data = await axios.post(`${URL}/auth/register`, {
       ...formData,
     });
     console.log(data);
-    if (data.data.resultCode === "00035") {
-      alert.success(data.data.resultMessage.en);
-      // setOpen(true);
-      dispatch({ type: LOGIN_SUCCESS, payload: data.data.user });
+    if (data.data.success) {
+      setErr(data.data.message);
+      alert.success(data.data.message);
+      setOpen(true);
     } else {
-      alert.error(data.data.resultMessage.en);
-      setErr(data.data.resultMessage.en);
+      alert.error(data.data.message);
+      setErr(data.data.message);
     }
   };
 
   const handleotp = async () => {
-    try {
-      const data = await axios.post(`${URL}/auth/otp`, {
-        email,
-        otp,
-      });
-      setErr(data.data.message);
-      localStorage.setItem("token", data.data.token);
-      dispatch({ type: LOGIN_SUCCESS, payload: data.data.user });
-      alert.success(data.data.message);
-    }
-    catch (e) {
-      alert.error(e)
-    }
+    try{
+    const data = await axios.post(`${URL}/auth/otp`, {
+      email,
+      otp,
+    });
+    setErr(data.data.message);
+    localStorage.setItem("token", data.data.token);
+    dispatch({ type: LOGIN_SUCCESS, payload: data.data.user });
+    alert.success(data.data.message);
+  }
+  catch(e){
+    alert.error(e)
+  }
   };
 
   return (
@@ -138,17 +138,17 @@ export function Register() {
             </Typography>
             <TextField
               required
-              id="name"
-              name="name"
+              id="username"
+              name="username"
               label="Name"
               variant="standard"
               fullWidth
               margin="dense"
-              {...register("name")}
-              error={errors.name ? true : false}
+              {...register("username")}
+              error={errors.username ? true : false}
             />
             <Typography variant="inherit" color="textSecondary">
-              {errors.name?.message}
+              {errors.username?.message}
             </Typography>
             <TextField
               required

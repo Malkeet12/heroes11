@@ -1,10 +1,10 @@
-import cors from "cors";
+// import cors from "cors";
 import express from "express";
 import { port } from "./config/index.js";
 import loader from "./loaders/index.js";
 
 const app = express();
-app.use(cors());
+// app.use(cors());
 
 loader(app);
 
